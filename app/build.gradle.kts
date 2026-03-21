@@ -53,15 +53,18 @@ dependencies {
 
 
     // библиотека сериализации
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
     // Coroutines для асинхронности
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
 
     // Библиотека для загрузки изображений, их кэширования и заглушки, пока грузится картинка
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    //Навигация
+    implementation("androidx.navigation:navigation-compose:2.9.7")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
