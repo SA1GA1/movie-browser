@@ -60,6 +60,9 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
 
+    // Библиотека для загрузки изображений, их кэширования и заглушки, пока грузится картинка
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
