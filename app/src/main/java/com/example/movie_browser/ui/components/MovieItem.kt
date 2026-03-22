@@ -3,7 +3,6 @@ package com.example.movie_browser.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,7 +37,8 @@ fun MovieItem (
             .padding(5.dp)
     ) {
         Box (
-            modifier = Modifier.clickable {onClick()}
+            modifier = Modifier
+                .clickable {onClick()}
                 .fillMaxWidth()
                 .height(228.dp)
                 .clip(RoundedCornerShape(8.dp))
