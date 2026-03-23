@@ -27,4 +27,10 @@ interface MovieApiService {
         @Header("Authorization") token: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDk3ZWU0MmQxMjMwODUwM2E1MDE3ZGUxNTIwNTIzNyIsIm5iZiI6MTc3NDAxNzU0MC41NjcwMDAyLCJzdWIiOiI2OWJkNWMwNDAzNWFmYzI4NmI0NWY0YzYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.8jOl5evjumgIRk8wr85-QNHs7pCPNoB4MwJrOKBAADI"
     ): MovieResponse
 
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("language") language: String = "ru-RU",
+        @Header("Authorization") token: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDk3ZWU0MmQxMjMwODUwM2E1MDE3ZGUxNTIwNTIzNyIsIm5iZiI6MTc3NDAxNzU0MC41NjcwMDAyLCJzdWIiOiI2OWJkNWMwNDAzNWFmYzI4NmI0NWY0YzYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.8jOl5evjumgIRk8wr85-QNHs7pCPNoB4MwJrOKBAADI"
+    ): MovieResponse
 }

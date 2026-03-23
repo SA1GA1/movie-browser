@@ -38,17 +38,16 @@ fun MovieItem (
     ) {
         Box (
             modifier = Modifier
-                .clickable {onClick()}
                 .fillMaxWidth()
                 .height(228.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .clickable { onClick() }
         ) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                model = "https://image.tmdb.org/t/p/w500${movie.posterPath ?: ""}",
                 contentDescription = movie.title,
                 modifier = Modifier
-                    .height(228.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .height(228.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -73,7 +72,7 @@ fun MovieItem (
             lineHeight = 16.sp
         )
         Text(
-            text = movie.releaseDate.take(4) + " год",
+            text = (movie.releaseDate ?: "    ").take(4) + " год",
             style = MaterialTheme.typography.bodySmall,
             )
     }

@@ -8,12 +8,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import android.util.Log
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 
 class HomeViewModel (
     private val repository: MovieRepository = MovieRepository()
 ): ViewModel() {
+
+    // для уменьшения количества запросов
+    private var searchJob: Job? = null
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState> = _state.asStateFlow()
 
@@ -46,8 +51,38 @@ class HomeViewModel (
                 }
             }
             catch (e: Exception) {
-                Log.e("MOVIE_DEBUG", "Ошибка при загрузке данных", e)
+                Log.e("MOVIE_DEBUG", "Ошибка при загрузке данных о фильме", e)
                 _state.update { it.copy(isLoading = false, errorMessage = e.message) }
+            }
+        }
+    }
+
+    fun onSearchQueryChange(newQuery: String) {
+        // обновление текста при поиске
+        _state.update { it.copy(searchQuery = newQuery)}
+
+        // отмена предыдущего поиска, если он не успел выполниться
+        searchJob?.cancel()
+
+        // отчистка поиска при пустом запросе
+        if (newQuery.isBlank()) {
+            _state.update { it.copy(searchResult = emptyList())}
+            return
+        }
+
+        searchJob = viewModelScope.launch {
+
+            delay(488)
+
+            try {
+                val response = repository.searchMovies(query = newQuery)
+
+                _state.update {
+                    it.copy(searchResult = response.results)
+                }
+            }
+            catch (e: Exception) {
+                Log.e("MOVIE_DEBUG", "Ошибка при поиске фильмов", e)
             }
         }
     }

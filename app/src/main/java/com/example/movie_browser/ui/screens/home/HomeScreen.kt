@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movie_browser.ui.components.MovieSection
+import androidx.compose.foundation.lazy.items
+import com.example.movie_browser.ui.components.HomeSearchBar
+import com.example.movie_browser.ui.components.SearchMovieItem
 
 
 @Composable
@@ -29,34 +32,49 @@ fun HomeScreen(
            )
        }
        else {
-           LazyColumn {
-               // item { HomeSearchBar()} допилить поиск
-
-               // хайповые филмс
+           LazyColumn (modifier = Modifier.fillMaxSize()) {
+               // поле поиска
                item {
-                   MovieSection(
-                       title = "Популярное",
-                       movies = screenState.popularMovies,
-                       onMovieClick = onMovieClick
+                   HomeSearchBar(
+                       query = screenState.searchQuery,
+                       onQueryChange = { viewModel.onSearchQueryChange(it)}
                    )
                }
+               if (screenState.searchQuery.isEmpty())  {
+                   // хайповые филмс
+                   item {
+                       MovieSection(
+                           title = "Популярное",
+                           movies = screenState.popularMovies,
+                           onMovieClick = onMovieClick
+                       )
+                   }
 
-               // legend films
-               item {
-                   MovieSection(
-                       title = "Лучшие фильмы",
-                       movies = screenState.topRatedMovies,
-                       onMovieClick = onMovieClick
-                   )
+                   // legend films
+                   item {
+                       MovieSection(
+                           title = "Лучшие фильмы",
+                           movies = screenState.topRatedMovies,
+                           onMovieClick = onMovieClick
+                       )
+                   }
+
+                   // ну типо скоро
+                   item {
+                       MovieSection(
+                           title = "Скоро в кино",
+                           movies = screenState.upcomingMovies,
+                           onMovieClick = onMovieClick
+                       )
+                   }
                }
-
-               // ну типо скоро
-               item {
-                   MovieSection(
-                       title = "Скоро в кино",
-                       movies = screenState.upcomingMovies,
-                       onMovieClick = onMovieClick
-                   )
+               else {
+                   items(screenState.searchResult) { movie ->
+                       SearchMovieItem(
+                           movie = movie,
+                           onClick = { onMovieClick(movie.id)}
+                       )
+                   }
                }
            }
        }
