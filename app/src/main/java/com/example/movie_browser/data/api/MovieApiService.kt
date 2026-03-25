@@ -1,5 +1,6 @@
 package com.example.movie_browser.data.api
 
+import com.example.movie_browser.data.model.MovieDetails
 import com.example.movie_browser.data.model.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
