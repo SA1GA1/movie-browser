@@ -3,6 +3,7 @@ package com.example.movie_browser.data.api
 import com.example.movie_browser.data.model.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApiService {
@@ -33,4 +34,11 @@ interface MovieApiService {
         @Query("language") language: String = "ru-RU",
         @Header("Authorization") token: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDk3ZWU0MmQxMjMwODUwM2E1MDE3ZGUxNTIwNTIzNyIsIm5iZiI6MTc3NDAxNzU0MC41NjcwMDAyLCJzdWIiOiI2OWJkNWMwNDAzNWFmYzI4NmI0NWY0YzYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.8jOl5evjumgIRk8wr85-QNHs7pCPNoB4MwJrOKBAADI"
     ): MovieResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: String = "ru-RU",
+        @Header("Authorization") token: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMDk3ZWU0MmQxMjMwODUwM2E1MDE3ZGUxNTIwNTIzNyIsIm5iZiI6MTc3NDAxNzU0MC41NjcwMDAyLCJzdWIiOiI2OWJkNWMwNDAzNWFmYzI4NmI0NWY0YzYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.8jOl5evjumgIRk8wr85-QNHs7pCPNoB4MwJrOKBAADI"
+    ): MovieDetails
 }
