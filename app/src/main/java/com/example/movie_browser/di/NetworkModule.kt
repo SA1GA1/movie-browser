@@ -12,7 +12,7 @@ object NetworkModule {
     private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     private val json = Json {
-        ignoreUnknownKeys = true // игнорировать неизвестные поля в JSON
+        ignoreUnknownKeys = true // игнорировать неизвестные поля в JSON (можно обрабатывать не все значения)
         coerceInputValues = true
     }
 

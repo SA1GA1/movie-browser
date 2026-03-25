@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 class MovieDetails (
     val id: Int,
     val title: String,
-    val overview: String, // краткий пенис
+    val overview: String?, // краткий пенис
     val runtime: Int?,
-    val tagLine: String?, // слоган
+    val tagline: String?, // слоган
     val genres: List<Genre>, // жанры
     @SerialName("poster_path") val posterPath: String?,
     @SerialName("backdrop_path") val backdropPath: String?,
