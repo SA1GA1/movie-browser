@@ -12,6 +12,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -25,16 +26,21 @@ fun HomeSearchBar(
         onValueChange = onQueryChange,
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        placeholder = { Text("Поиск фильмов...") },
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        placeholder = { Text("Поиск фильмов...", color = Color.Gray) },
         leadingIcon = {
-            Icon(Icons.Default.Search, contentDescription = null)
+            Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray)
         },
         singleLine = true,
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface
+            focusedContainerColor = Color(0xFF1A1A1A),
+            unfocusedContainerColor = Color(0xFF1A1A1A),
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
+            cursorColor = Color(0xFFFF5C00),
+            focusedBorderColor = Color(0xFFFF5C00),
+            unfocusedBorderColor = Color.Transparent
         )
     )
 }
