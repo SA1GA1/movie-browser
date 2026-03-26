@@ -3,6 +3,7 @@ package com.example.movie_browser.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,63 +19,65 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.movie_browser.data.model.Movie
 
 
 @Composable
-fun MovieItem (
+fun MovieItem(
     movie: Movie,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column (
+    Column(
         modifier = modifier
-            .width(150.dp)
-            .padding(5.dp)
+            .width(130.dp)
+            .padding(horizontal = 4.dp, vertical = 8.dp)
     ) {
-        Box (
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(228.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .height(190.dp)
+                .clip(RoundedCornerShape(4.dp))
                 .clickable { onClick() }
         ) {
             AsyncImage(
                 model = "https://image.tmdb.org/t/p/w500${movie.posterPath ?: ""}",
-                contentDescription = movie.title,
-                modifier = Modifier
-                    .height(228.dp),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
+            // Рейтинг
             Surface(
-                shape = RoundedCornerShape(4.dp),
-                color = Color(0xFF4CAF50),
+                color = if (movie.voteAverage >= 7.0) Color(0xFF4CAF50) else Color.Gray,
+                shape = RoundedCornerShape(2.dp),
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(6.dp)
                     .align(Alignment.TopStart)
             ) {
                 Text(
-                    text = String.format(java.util.Locale.US ,"%.1f", movie.voteAverage), // java.util.Locale.US фиксит предупреждение о форматировании текстов для разных языков
+                    text = String.format(java.util.Locale.US, "%.1f", movie.voteAverage),
+                    style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
                 )
             }
         }
-        Text (
-            text = movie.title,
-            fontWeight = FontWeight.Bold,
-            lineHeight = 16.sp
-        )
+
         Text(
-            text = (movie.releaseDate ?: "    ").take(4) + " год",
-            style = MaterialTheme.typography.bodySmall,
-            )
+            text = movie.title,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Medium,
+            color = Color.White,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(top = 4.dp)
+        )
     }
 }
 
