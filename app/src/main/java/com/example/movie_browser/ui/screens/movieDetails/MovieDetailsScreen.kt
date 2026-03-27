@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,18 +37,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.sp
 import java.util.Locale
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
 
 @Composable
 fun MovieDetailsScreen(
     movieId: Int,
+    onBackCLick: () -> Unit,
     viewModel: MovieDetailsViewModel = viewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()// загрузка при первом запуске
+
     LaunchedEffect(movieId) {
         viewModel.loadMovieDetails(movieId)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
         when (val currentState = state) {
             is MovieDetailsState.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -61,6 +69,20 @@ fun MovieDetailsScreen(
             is MovieDetailsState.Success -> {
                 DetailsContent(movie = currentState.movie)
             }
+        }
+
+        // кнопка назад при поиске
+        IconButton(
+            onClick = onBackCLick,
+            modifier = Modifier
+                .padding(16.dp)
+                .background(Color.Black.copy(alpha = 0.6f), shape = CircleShape)
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Назад",
+                tint = Color.White
+            )
         }
     }
 }
@@ -123,7 +145,7 @@ fun DetailsContent(movie: MovieDetails) {
                             color = Color.LightGray
                         )
                     }
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier =Modifier.width(12.dp))
                     Text(text = "Оценка: ${String.format(Locale.US, "%.1f", movie.voteAverage)}", color = Color(0xFFFFD700))
                 }
 

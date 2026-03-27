@@ -22,13 +22,15 @@ fun NavGraph (navController: NavHostController) {
             })
         }
 
-        // Заглушка экрана с фильмом
         composable(
             route = Screen.Details.route,
             arguments = listOf(navArgument("movieId") { type = NavType.IntType })
         ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getInt("movieId") ?: 0
-            MovieDetailsScreen(movieId = movieId)
+            MovieDetailsScreen(
+                movieId = movieId,
+                onBackCLick = { navController.popBackStack() }
+            )
         }
     }
 }

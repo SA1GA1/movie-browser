@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -29,7 +30,14 @@ fun HomeSearchBar(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         placeholder = { Text("Поиск фильмов...", color = Color.Gray) },
         leadingIcon = {
-            Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray)
+            if (query.isNotEmpty()) {
+                IconButton(onClick = { onQueryChange("") }) {
+                    Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFFFF5C00))
+                }
+            }
+            else {
+                Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray)
+            }
         },
         singleLine = true,
         shape = RoundedCornerShape(12.dp),
